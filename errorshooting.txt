@@ -1,0 +1,3 @@
+https://github.com/facebookresearch/DPR/issues/147
+en_core_web_sm
+
