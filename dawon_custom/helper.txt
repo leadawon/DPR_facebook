@@ -1,0 +1,17 @@
+https://haystack.deepset.ai/tutorials/09_dpr_training
+different lib
+
+
+https://colab.research.google.com/drive/1dv3DE4Lp39T6F3fI466iZLdtZfpyTXHI?usp=sharing#scrollTo=bYld105Os-oF
+wrong preprocessing
+
+
+
+https://stackoverflow.com/questions/76723203/how-should-data-be-formatted-to-train-the-huggingface-dpr-model
+hmm... stack overflow
+
+
+https://yumdata.tistory.com/419
+dpr + rag extend information
+
+
