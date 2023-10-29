@@ -13,6 +13,7 @@
 import logging
 import math
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 import random
 import sys
 import time
@@ -144,7 +145,7 @@ class BiEncoderTrainer(object):
             rank=rank,
         )
 
-    def run_train(self):
+    def run_train(self): # here is run train
         cfg = self.cfg
 
         train_iterator = self.get_data_iterator(
@@ -157,6 +158,7 @@ class BiEncoderTrainer(object):
         )
         max_iterations = train_iterator.get_max_iterations()
         logger.info("  Total iterations per epoch=%d", max_iterations)
+        assert False
         if max_iterations == 0:
             logger.warning("No data found for training.")
             return
@@ -746,13 +748,14 @@ def _do_biencoder_fwd_pass(
 
 @hydra.main(config_path="conf", config_name="biencoder_train_cfg")
 def main(cfg: DictConfig):
+    
     if cfg.train.gradient_accumulation_steps < 1:
         raise ValueError(
             "Invalid gradient_accumulation_steps parameter: {}, should be >= 1".format(
                 cfg.train.gradient_accumulation_steps
             )
         )
-
+    print("here ends!!\n\n\n\n")
     if cfg.output_dir is not None:
         os.makedirs(cfg.output_dir, exist_ok=True)
 
@@ -786,5 +789,15 @@ if __name__ == "__main__":
             hydra_formatted_args.append(arg)
     logger.info("Hydra formatted Sys.argv: %s", hydra_formatted_args)
     sys.argv = hydra_formatted_args
-
+    
     main()
+
+    '''
+    config 상태
+    
+    {'encoder': {'encoder_model_type': 'hf_bert', 'pretrained_model_cfg': 'bert-base-uncased', 'pretrained_file': None, 'projection_dim': 0, 'sequence_length': 256, 'dropout': 0.1, 'fix_ctx_encoder': False, 'pretrained': True}, 
+    
+    'train': {'batch_size': 1, 'dev_batch_size': 16, 'adam_eps': 1e-08, 'adam_betas': '(0.9, 0.999)', 'max_grad_norm': 2.0, 'log_batch_step': 1, 'train_rolling_loss_step': 100, 'weight_decay': 0.0, 'learning_rate': 2e-05, 'warmup_steps': 1237, 'gradient_accumulation_steps': 1, 'num_train_epochs': 40, 'eval_per_epoch': 1, 'hard_negatives': 1, 'other_negatives': 0, 'val_av_rank_hard_neg': 30, 'val_av_rank_other_neg': 30, 'val_av_rank_bsz': 128, 'val_av_rank_max_qs': 10000}, 
+    'datasets': {'nq_train': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.nq-train'}, 'nq_train_hn1': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.nq-adv-hn-train'}, 'nq_dev': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.nq-dev'}, 'trivia_train': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.trivia-train'}, 'trivia_dev': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.trivia-dev'}, 'squad1_train': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.squad1-train'}, 'squad1_dev': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.squad1-dev'}, 'webq_train': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.webq-train'}, 'webq_dev': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.webq-dev'}, 'curatedtrec_train': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.curatedtrec-train'}, 'curatedtrec_dev': {'_target_': 'dpr.data.biencoder_data.JsonQADataset', 'file': 'data.retriever.curatedtrec-dev'}}, 'train_datasets': ['nq_train'], 'dev_datasets': ['nq_dev'], 'output_dir': './bigdata/checkpoints', 'train_sampling_rates': None, 'loss_scale_factors': None, 'do_lower_case': True, 'val_av_rank_start_epoch': 30, 'seed': 12345, 'checkpoint_file_name': 'dpr_biencoder', 'model_file': None, 'local_rank': -1, 'global_loss_buf_sz': 592000, 'device': None, 'distributed_world_size': None, 'distributed_port': None, 'distributed_init_method': None, 'no_cuda': False, 'n_gpu': None, 'fp16': False, 'fp16_opt_level': 'O1', 'special_tokens': None, 'ignore_checkpoint_offset': False, 'ignore_checkpoint_optimizer': False, 'ignore_checkpoint_lr': False, 'multi_q_encoder': False, 'local_shards_dataloader': False}
+    
+    '''
