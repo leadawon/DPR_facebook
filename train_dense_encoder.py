@@ -1,3 +1,6 @@
+
+
+
 #!/usr/bin/env python3
 # Copyright (c) Facebook, Inc. and its affiliates.
 # All rights reserved.
@@ -13,7 +16,7 @@
 import logging
 import math
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 import random
 import sys
 import time
@@ -123,7 +126,8 @@ class BiEncoderTrainer(object):
         )
 
         single_ds_iterator_cls = LocalShardedDataIterator if self.cfg.local_shards_dataloader else ShardedDataIterator
-
+        
+        
         sharded_iterators = [
             single_ds_iterator_cls(
                 ds,
@@ -135,7 +139,8 @@ class BiEncoderTrainer(object):
                 offset=offset,
             )
             for ds in hydra_datasets
-        ]
+        ] # len = 1
+
 
         return MultiSetDataIterator(
             sharded_iterators,
@@ -158,7 +163,7 @@ class BiEncoderTrainer(object):
         )
         max_iterations = train_iterator.get_max_iterations()
         logger.info("  Total iterations per epoch=%d", max_iterations)
-        assert False
+        
         if max_iterations == 0:
             logger.warning("No data found for training.")
             return
@@ -486,6 +491,7 @@ class BiEncoderTrainer(object):
             rep_positions = selector.get_positions(biencoder_batch.question_ids, self.tensorizer)
 
             loss_scale = cfg.loss_scale_factors[dataset] if cfg.loss_scale_factors else None
+
             loss, correct_cnt = _do_biencoder_fwd_pass(
                 self.biencoder,
                 biencoder_batch,
