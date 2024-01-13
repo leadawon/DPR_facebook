@@ -10,6 +10,8 @@ from setuptools import setup
 with open("README.md") as f:
     readme = f.read()
 
+print("you have to install torch first!!!!!")
+    
 setup(
     name="dpr",
     version="1.0.0",
@@ -31,7 +33,7 @@ setup(
         "filelock",
         "numpy",
         "regex",
-        "torch>=1.5.0",
+        #"torch>=1.5.0",
         "transformers>=4.3",
         "tqdm>=4.27",
         "wget",
