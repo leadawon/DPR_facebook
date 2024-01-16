@@ -5,3 +5,13 @@
         
         pip install . issues
         https://github.com/facebookresearch/DPR/issues/223#issuecomment-1192218375
+        
+        
+        en_core_web_sm issue
+        https://github.com/facebookresearch/DPR/issues/147
+
+        
+        
+        
+        inference issue
+        https://github.com/facebookresearch/DPR/issues/213

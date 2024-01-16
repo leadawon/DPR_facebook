@@ -9,7 +9,7 @@
  Command line tool to get dense results and validate them
 """
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "4"
 import glob
 import json
 import logging

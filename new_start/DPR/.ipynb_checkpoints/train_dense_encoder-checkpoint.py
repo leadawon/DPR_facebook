@@ -442,6 +442,7 @@ class BiEncoderTrainer(object):
         train_data_iterator: MultiSetDataIterator,
     ):
 
+
         cfg = self.cfg
         rolling_train_loss = 0.0
         epoch_loss = 0
@@ -459,6 +460,12 @@ class BiEncoderTrainer(object):
         biencoder = get_model_obj(self.biencoder)
         dataset = 0
         for i, samples_batch in enumerate(train_data_iterator.iterate_ds_data(epoch=epoch)):
+            # dawon epoch handler
+            if i==1:
+                print("system halted by dawon epoch handler!!"*100)
+                assert False
+            
+            
             if isinstance(samples_batch, Tuple):
                 samples_batch, dataset = samples_batch
 
