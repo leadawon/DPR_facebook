@@ -461,9 +461,9 @@ class BiEncoderTrainer(object):
         dataset = 0
         for i, samples_batch in enumerate(train_data_iterator.iterate_ds_data(epoch=epoch)):
             # dawon epoch handler
-            if i==1:
-                print("system halted by dawon epoch handler!!"*100)
-                assert False
+            #if i==1:
+                #print("system halted by dawon epoch handler!!"*100)
+                #assert False
             
             
             if isinstance(samples_batch, Tuple):
