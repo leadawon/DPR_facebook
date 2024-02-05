@@ -347,6 +347,10 @@ def save_results(
     # join passages text with the result ids, their questions and assigning has|no answer labels
     merged_data = []
     # assert len(per_question_hits) == len(questions) == len(answers)
+#     print(passages)
+#     print("*"*100)
+#     print(top_passages_and_scores)
+#     assert False
     for i, q in enumerate(questions):
         q_answers = answers[i]
         results_and_scores = top_passages_and_scores[i]
